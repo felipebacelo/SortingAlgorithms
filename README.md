@@ -131,6 +131,117 @@ heap.sort <- function(heap) {
 }
 ```
 
+* ### Insertion Sort
+
+```
+insertion.sort <- function(elements.vec) { 
+  for (j in 2:length(elements.vec)) {
+    key = elements.vec[j] 
+    i = j - 1
+    while (i > 0 && elements.vec[i] > key) {
+      elements.vec[(i + 1)] = elements.vec[i]
+      i = i - 1
+    }
+    elements.vec[(i + 1)] = key
+  }
+  return(elements.vec)
+}
+```
+
+* ### Merge Sort
+
+```
+merge.func <-function(leftArray, rightArray) {
+    l <- numeric(length(leftArray) + length(rightArray))
+    leftIndex <- 1; rightIndex <- 1; i <- 1;
+    for(i in 1:length(l)) {
+        if((leftIndex <= length(leftArray) && leftArray[leftIndex] < rightArray[rightIndex]) || rightIndex > length(rightArray)) {
+            l[i] <- leftArray[leftIndex]
+            leftIndex <- leftIndex + 1
+        } else {
+            l[i] <- rightArray[rightIndex]
+            rightIndex <- rightIndex + 1
+        }
+    }
+    return(l)
+}
+
+merge.sort <- function(elements.vec) {
+    if(length(elements.vec) > 1) { 
+        m <- ceiling(length(elements.vec) / 2)
+        leftArray <- merge.sort(elements.vec[1:m])
+        rightArray <- merge.sort(elements.vec[(m + 1):length(elements.vec)])
+        merge.func(leftArray, rightArray)
+    } 
+    else {
+        return(elements.vec)
+    }
+}
+```
+
+* ### Quick Sort
+
+```
+quick.sort <- function(elements.vec) {
+  if(length(elements.vec) <= 1) {
+    return(elements.vec)
+  }
+  pivot <- elements.vec[1]
+  non.pivot  <- elements.vec[-1]
+  pivot_less    <- quick.sort(non.pivot[non.pivot < pivot])
+  pivot_greater <- quick.sort(non.pivot[non.pivot >= pivot])
+  return(c(pivot_less, pivot, pivot_greater))
+}
+```
+
+* ### Radix Sort
+
+```
+radix.sort <- function(elements.vec) {
+    x <- nchar(max(elements.vec))
+    for (i in 1:x)
+        elements.vec <- elements.vec[order(elements.vec %% (10 ^ i))]
+    return(elements.vec)
+}
+```
+
+* ### Selection Sort
+
+```
+selection.sort <- function(elements.vec, ascending = TRUE) {
+  max <- length(elements.vec)
+  if (ascending) {
+    for (j in 1:(max - 1)) {
+      m <- elements.vec[j]
+      p <- j
+      for(k in (j + 1):max) {
+        if(elements.vec[k] < m) {
+          m <- elements.vec[k]
+          p <- k
+        } 
+      } 
+        elements.vec[p] <- elements.vec[j]
+        elements.vec[j] <- m
+      } 
+    } 
+    else {
+      for (j in 1:(max - 1)) {
+        m <- elements.vec[j]
+        p <- j
+        for(k in (j + 1):max) {
+          if(elements.vec[k] > m) {
+            m <- elements.vec[k]
+            p <- k
+          } 
+        } 
+        elements.vec[p] <- elements.vec[j]
+        elements.vec[j] <- m
+      } 
+    }
+  return(elements.vec)
+}
+```
+
 ***
 
 ### Licenças
